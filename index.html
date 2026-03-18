@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dhrubanshika's 200 Days Tracker 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800;900&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* =============================================
+       CSS VARIABLES & RESET
+    ============================================= */
+    :root {
+      --pink: #FF9EC4;
+      --light-pink: #FFD6E8;
+      --pastel-pink: #FFADD4;
+      --soft-pink: #FFF0F7;
+      --lavender: #D8BFFF;
+      --light-lavender: #F0E6FF;
+      --white: #FFFAFD;
+      --cream: #FFF8F2;
+      --text-dark: #4A2C3A;
+      --text-mid: #7A4A60;
+      --text-light: #B07A95;
+      --green: #A8E6CF;
+      --yellow: #FFE5A0;
+      --peach: #FFCBA4;
+      --shadow: rgba(255, 158, 196, 0.25);
+      --shadow-deep: rgba(180, 80, 130, 0.15);
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --border: rgba(255, 173, 212, 0.4);
+      --gradient-main: linear-gradient(135deg, #FFD6E8 0%, #F0E6FF 50%, #FFE5F5 100%);
+      --gradient-card: linear-gradient(135deg, #fff0f7 0%, #f8f0ff 100%);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Dark Mode */
+    body.dark-mode {
+      --soft-pink: #2D1A27;
+      --cream: #261520;
+      --white: #1E1020;
+      --card-bg: rgba(50, 20, 40, 0.95);
+      --text-dark: #FFD6E8;
+      --text-mid: #E8B4D0;
+      --text-light: #C090A8;
+      --border: rgba(255, 100, 160, 0.3);
+      --shadow: rgba(255, 80, 160, 0.2);
+      --gradient-main: linear-gradient(135deg, #2D1A27 0%, #1E1035 50%, #2A1020 100%);
+      --gradient-card: linear-gradient(135deg, #2D1A27 0%, #221535 100%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--gradient-main);
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFB7D5' fill-opacity='0.08'%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3Ccircle cx='50' cy='10' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0;
+    }
+
+    /* =============================================
+       SCROLLBAR
+    ============================================= */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--light-pink); }
+    ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 10px; }
+
+    /* =============================================
+       HEADER
+    ============================================= */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255, 214, 232, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 2px solid var(--border);
+      padding: 0 20px;
+    }
+    .dark-mode header { background: rgba(45, 26, 39, 0.9); }
+
+    .header-inner {
+      max-width: 1300px; margin: 0 auto;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 14px 0; gap: 12px; flex-wrap: wrap;
+    }
+
+    .header-title {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .header-title .cat-icon { font-size: 2rem; animation: wiggle 3s ease-in-out infinite; }
+    .header-title h1 {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 700; color: var(--text-dark);
+      letter-spacing: 0.3px; line-height: 1.2;
+    }
+    .header-title h1 span { color: var(--pink); }
+
+    .header-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    .share-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--card-bg); border: 1.5px solid var(--border);
+      border-radius: 30px; padding: 6px 14px;
+      font-size: 0.72rem; font-weight: 700; color: var(--text-mid);
+      cursor: pointer; transition: var(--transition);
+      white-space: nowrap;
+    }
+    .share-badge:hover { transform: scale(1.05); box-shadow: 0 4px 15px var(--shadow); }
+
+    .icon-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--card-bg);
+      cursor: pointer; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition); color: var(--text-dark);
+    }
+    .icon-btn:hover { transform: scale(1.1); box-shadow: 0 4px 15px var(--shadow); }
+
+    /* =============================================
+       NAV TABS
+    ============================================= */
+    .nav-tabs {
+      max-width: 1300px; margin: 0 auto;
+      display: flex; gap: 6px;
+      padding: 16px 20px 0;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+
+    .nav-tab {
+      flex-shrink: 0;
+      padding: 10px 18px;
+      border-radius: 14px 14px 0 0;
+      border: 2px solid var(--border);
+      border-bottom: none;
+      background: var(--card-bg);
+      color: var(--text-mid);
+      font-family: 'Patrick Hand', cursive;
+      font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+      white-space: nowrap;
+    }
+    .nav-tab:hover { background: var(--light-pink); color: var(--text-dark); }
+    .nav-tab.active {
+      background: var(--soft-pink);
+      color: var(--text-dark);
+      border-color: var(--pink);
+      font-weight: 700;
+      position: relative;
+    }
+    .nav-tab.active::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 2px; background: var(--soft-pink);
+    }
+
+    /* =============================================
+       MAIN CONTENT
+    ============================================= */
+    .main-wrap {
+      max-width: 1300px; margin: 0 auto;
+      padding: 0 20px 40px;
+    }
+
+    .tab-panel {
+      display: none;
+      background: var(--card-bg);
+      border: 2px solid var(--pink);
+      border-radius: 0 20px 20px 20px;
+      padding: 28px;
+      box-shadow: 0 8px 40px var(--shadow);
+      animation: fadeIn 0.4s ease;
+    }
+    .tab-panel.active { display: block; }
+
+    /* =============================================
+       CARDS
+    ============================================= */
+    .card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--shadow-deep); }
+    .card::before {
+      content: ''; position: absolute; top: -30px; right: -30px;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--light-pink); opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px; margin-top: 20px;
+    }
+
+    .section-title {
+      font-family: 'Caveat', cursive;
+      font-size: 1.7rem; font-weight: 700;
+      color: var(--text-dark); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-title .bunny { animation: bounce 2s ease-in-out infinite; display: inline-block; }
+
+    /* =============================================
+       PROGRESS BARS
+    ============================================= */
+    .progress-wrap { margin: 10px 0; }
+    .progress-label {
+      display: flex; justify-content: space-between;
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--text-mid); margin-bottom: 6px;
+    }
+    .progress-bar-track {
+      height: 14px; border-radius: 20px;
+      background: var(--light-pink);
+      overflow: hidden; position: relative;
+    }
+    .progress-bar-fill {
+      height: 100%; border-radius: 20px;
+      background: linear-gradient(90deg, var(--pink), var(--lavender));
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative; overflow: hidden;
+    }
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    /* =============================================
+       EXPANDABLE CHAPTERS
+    ============================================= */
+    .subject-section { margin-bottom: 24px; }
+    .subject-header {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--gradient-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px; cursor: pointer;
+      transition: var(--transition);
+    }
+    .subject-header:hover { background: var(--light-lavender); box-shadow: 0 4px 15px var(--shadow); }
+    .subject-header-left { display: flex; align-items: center; gap: 10px; }
+    .subject-header-left h3 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--text-dark);
+    }
+    .chevron { font-size: 1rem; transition: transform 0.3s ease; color: var(--pink); }
+    .expanded .chevron { transform: rotate(180deg); }
+
+    .chapter-body {
+      display: none; padding: 16px;
+      background: var(--soft-pink);
+      border: 1.5px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    }
+    .chapter-body.open { display: block; animation: slideDown 0.3s ease; }
+
+    .topic-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .topic-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border-radius: var(--radius-sm);
+      background: var(--card-bg); border: 1.5px solid transparent;
+      cursor: pointer; transition: var(--transition);
+    }
+    .topic-item:hover { border-color: var(--pink); transform: translateX(4px); }
+    .topic-item.done { background: var(--light-pink); border-color: var(--pink); }
+    .topic-item.done label { text-decoration: line-through; color: var(--text-light); }
+
+    .cute-checkbox {
+      width: 20px; height: 20px; border-radius: 6px;
+      border: 2px solid var(--pink);
+      background: white; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: var(--transition); font-size: 0.7rem;
+    }
+    .cute-checkbox.checked {
+      background: var(--pink); border-color: var(--pink);
+      animation: pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .cute-checkbox.checked::after { content: '✓'; color: white; font-weight: 700; }
+
+    .topic-item label { font-size: 0.88rem; cursor: pointer; user-select: none; }
+
+    /* =============================================
+       QUOTE BANNER
+    ============================================= */
+    .quote-banner {
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      border-radius: var(--radius);
+      padding: 20px 28px;
+      text-align: center; margin-bottom: 24px;
+      position: relative; overflow: hidden;
+    }
+    .quote-banner::before {
+      content: '🌸'; position: absolute; left: 20px; top: 50%;
+      transform: translateY(-50%); font-size: 1.5rem; opacity: 0.6;
+    }
+    .quote-banner::after {
+      content: '🌸'; position: absolute; right: 20px; top: 50%;
+      transform: translateY(-50%); font-size: 1.5rem; opacity: 0.6;
+    }
+    .quote-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem; color: white;
+      font-weight: 600; line-height: 1.5;
+    }
+
+    /* =============================================
+       WATER TRACKER
+    ============================================= */
+    .water-container {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      justify-content: center; margin: 20px 0;
+    }
+    .water-glass {
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex; flex-direction: column;
+      align-items: center; gap: 4px;
+    }
+    .water-glass:hover { transform: scale(1.15) rotate(-5deg); }
+    .glass-svg { width: 50px; height: 65px; }
+    .glass-label { font-size: 0.72rem; color: var(--text-light); font-weight: 700; }
+    .water-count-display {
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: 2rem; font-weight: 700;
+      color: var(--text-dark); margin-top: 12px;
+    }
+
+    /* =============================================
+       HABIT TRACKER
+    ============================================= */
+    .habit-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; border-radius: var(--radius-sm);
+      background: var(--gradient-card);
+      border: 1.5px solid var(--border);
+      margin-bottom: 10px; cursor: pointer;
+      transition: var(--transition);
+    }
+    .habit-item:hover { border-color: var(--pink); transform: translateX(4px); }
+    .habit-item.done { background: linear-gradient(90deg, var(--light-pink), var(--light-lavender)); border-color: var(--pink); }
+    .habit-left { display: flex; align-items: center; gap: 12px; }
+    .habit-emoji { font-size: 1.4rem; }
+    .habit-name { font-weight: 700; font-size: 0.95rem; }
+    .habit-streak { font-size: 0.75rem; color: var(--text-light); }
+    .habit-check {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid var(--pink);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; transition: var(--transition);
+    }
+    .habit-item.done .habit-check { background: var(--pink); border-color: var(--pink); }
+    .habit-item.done .habit-check::after { content: '✓'; color: white; font-weight: 700; }
+
+    /* =============================================
+       FLASHCARDS
+    ============================================= */
+    .flashcard-deck-selector {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .deck-btn {
+      padding: 8px 18px; border-radius: 20px;
+      border: 2px solid var(--border);
+      background: var(--card-bg); cursor: pointer;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--text-mid); transition: var(--transition);
+    }
+    .deck-btn:hover { background: var(--light-pink); }
+    .deck-btn.active { background: var(--pink); color: white; border-color: var(--pink); }
+
+    .flashcard-area { perspective: 1000px; margin: 20px 0; }
+    .flashcard {
+      width: 100%; max-width: 500px; margin: 0 auto;
+      height: 200px; position: relative;
+      cursor: pointer;
+      transform-style: preserve-3d; transition: transform 0.6s;
+    }
+    .flashcard.flipped { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; inset: 0;
+      border-radius: var(--radius);
+      backface-visibility: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; text-align: center;
+      box-shadow: 0 8px 30px var(--shadow);
+    }
+    .card-front {
+      background: linear-gradient(135deg, var(--light-pink), var(--light-lavender));
+      border: 2px solid var(--border);
+    }
+    .card-back {
+      background: linear-gradient(135deg, var(--lavender), var(--light-pink));
+      border: 2px solid var(--pink);
+      transform: rotateY(180deg);
+    }
+    .card-face p {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.05rem; color: var(--text-dark); line-height: 1.5;
+    }
+    .card-face .card-hint {
+      position: absolute; bottom: 12px; right: 16px;
+      font-size: 0.72rem; color: var(--text-light); font-style: italic;
+    }
+
+    .flashcard-controls {
+      display: flex; gap: 10px; justify-content: center;
+      align-items: center; flex-wrap: wrap; margin-top: 16px;
+    }
+
+    .add-flashcard-form {
+      background: var(--soft-pink); border-radius: var(--radius-sm);
+      padding: 20px; margin-top: 24px;
+      border: 1.5px dashed var(--pink);
+    }
+    .add-flashcard-form h4 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1rem; color: var(--text-dark); margin-bottom: 12px;
+    }
+    .form-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .cute-input, .cute-textarea {
+      flex: 1; min-width: 200px;
+      padding: 10px 14px; border-radius: var(--radius-sm);
+      border: 2px solid var(--border);
+      background: var(--card-bg); color: var(--text-dark);
+      font-family: 'Nunito', sans-serif; font-size: 0.88rem;
+      transition: var(--transition);
+    }
+    .cute-input:focus, .cute-textarea:focus {
+      outline: none; border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(255, 158, 196, 0.2);
+    }
+    .cute-textarea { resize: vertical; min-height: 70px; }
+
+    /* =============================================
+       200 DAYS GRID
+    ============================================= */
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+      gap: 6px; margin-top: 20px;
+    }
+    .day-cell {
+      aspect-ratio: 1; border-radius: 10px;
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition);
+      background: var(--card-bg); color: var(--text-mid);
+      position: relative;
+    }
+    .day-cell:hover { transform: scale(1.12); box-shadow: 0 4px 12px var(--shadow); }
+    .day-cell.completed {
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      color: white; border-color: var(--pink);
+    }
+    .day-cell.current {
+      border-color: var(--pink); border-width: 2.5px;
+      box-shadow: 0 0 0 3px rgba(255,158,196,0.3);
+      animation: pulse-ring 2s infinite;
+    }
+    .day-cell.current::after {
+      content: '★'; position: absolute; top: -8px; right: -5px;
+      font-size: 0.65rem; color: var(--pink);
+    }
+
+    /* =============================================
+       BUTTONS
+    ============================================= */
+    .btn {
+      padding: 10px 22px; border-radius: 25px;
+      border: 2px solid transparent;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      color: white; border-color: var(--pink);
+    }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 6px 20px var(--shadow); }
+    .btn-outline {
+      background: var(--card-bg); color: var(--text-mid);
+      border-color: var(--border);
+    }
+    .btn-outline:hover { border-color: var(--pink); color: var(--text-dark); transform: scale(1.03); }
+    .btn-danger {
+      background: linear-gradient(135deg, #FFB3BA, #FF8FAB);
+      color: white; border-color: #FF8FAB;
+    }
+    .btn-danger:hover { transform: scale(1.02); }
+    .btn-sm { padding: 7px 16px; font-size: 0.82rem; }
+
+    /* =============================================
+       STATS ROW
+    ============================================= */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px; margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--gradient-card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px; text-align: center;
+      transition: var(--transition);
+    }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px var(--shadow); }
+    .stat-icon { font-size: 1.8rem; margin-bottom: 6px; }
+    .stat-num {
+      font-family: 'Caveat', cursive;
+      font-size: 2rem; font-weight: 700; color: var(--text-dark);
+    }
+    .stat-label { font-size: 0.75rem; color: var(--text-light); font-weight: 600; margin-top: 2px; }
+
+    /* =============================================
+       SPARKLE / CONFETTI
+    ============================================= */
+    .sparkle {
+      position: fixed; pointer-events: none;
+      z-index: 9999; font-size: 1.4rem;
+      animation: sparkle-fly 1s ease forwards;
+    }
+
+    /* =============================================
+       MODAL
+    ============================================= */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4); z-index: 500;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--card-bg);
+      border: 2px solid var(--pink);
+      border-radius: var(--radius);
+      padding: 32px; max-width: 400px; width: 90%;
+      text-align: center; animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal h3 {
+      font-family: 'Caveat', cursive; font-size: 1.5rem;
+      color: var(--text-dark); margin-bottom: 12px;
+    }
+    .modal p { color: var(--text-mid); font-size: 0.9rem; margin-bottom: 20px; }
+    .modal-btns { display: flex; gap: 10px; justify-content: center; }
+
+    /* =============================================
+       TOAST NOTIFICATION
+    ============================================= */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 1000;
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      color: white; padding: 14px 22px; border-radius: 25px;
+      font-family: 'Patrick Hand', cursive; font-size: 0.95rem;
+      box-shadow: 0 6px 20px var(--shadow-deep);
+      transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-width: 280px;
+    }
+    .toast.show { transform: translateX(0); }
+
+    /* =============================================
+       SOUND TOGGLE
+    ============================================= */
+    .sound-waves { display: flex; gap: 2px; align-items: flex-end; height: 16px; }
+    .wave-bar {
+      width: 3px; border-radius: 2px; background: var(--pink);
+      transition: height 0.2s;
+    }
+    .sound-on .wave-bar:nth-child(1) { height: 4px; animation: wave 1s ease-in-out infinite 0s; }
+    .sound-on .wave-bar:nth-child(2) { height: 8px; animation: wave 1s ease-in-out infinite 0.2s; }
+    .sound-on .wave-bar:nth-child(3) { height: 12px; animation: wave 1s ease-in-out infinite 0.4s; }
+    .sound-on .wave-bar:nth-child(4) { height: 8px; animation: wave 1s ease-in-out infinite 0.6s; }
+    .sound-off .wave-bar { height: 3px; background: var(--text-light); }
+
+    /* =============================================
+       CUTE DECORATIONS
+    ============================================= */
+    .deco-rabbits {
+      display: flex; gap: 8px; justify-content: flex-end;
+      margin-bottom: 10px; font-size: 1.1rem;
+    }
+    .deco-rabbits span { animation: bounce 2s ease-in-out infinite; }
+    .deco-rabbits span:nth-child(2) { animation-delay: 0.3s; }
+    .deco-rabbits span:nth-child(3) { animation-delay: 0.6s; }
+
+    .cat-widget {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--light-pink); font-size: 1.1rem;
+    }
+
+    .overall-progress-display {
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: 3.5rem; font-weight: 700;
+      color: var(--pink); line-height: 1;
+      margin: 10px 0;
+    }
+
+    .subject-class-badge {
+      font-size: 0.7rem; padding: 2px 8px; border-radius: 20px;
+      background: var(--light-lavender); color: var(--text-mid);
+      font-weight: 700; flex-shrink: 0;
+    }
+
+    /* =============================================
+       ANIMATIONS
+    ============================================= */
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes shimmer {
+      to { left: 100%; }
+    }
+    @keyframes sparkle-fly {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-80px) scale(0.3); }
+    }
+    @keyframes pop {
+      0% { transform: scale(0.9); }
+      60% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(255,158,196,0.3); }
+      50% { box-shadow: 0 0 0 6px rgba(255,158,196,0.15); }
+    }
+    @keyframes wave {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(1.8); }
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 640px) {
+      .tab-panel { padding: 18px 14px; border-radius: 0 0 16px 16px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .days-grid { grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 4px; }
+      .day-cell { font-size: 0.65rem; border-radius: 8px; }
+    }
+
+    /* =============================================
+       MISC
+    ============================================= */
+    .divider {
+      height: 1px; background: var(--border);
+      margin: 20px 0; border-radius: 2px;
+    }
+    .chip {
+      display: inline-block; padding: 3px 10px;
+      border-radius: 20px; font-size: 0.72rem; font-weight: 700;
+      background: var(--light-pink); color: var(--text-mid);
+    }
+    .text-center { text-align: center; }
+    .mt-8 { margin-top: 8px; }
+    .mt-16 { margin-top: 16px; }
+    .flex { display: flex; }
+    .gap-8 { gap: 8px; }
+    .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .subject-subhead {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1rem; color: var(--text-mid);
+      font-weight: 600; margin: 16px 0 8px;
+      padding-left: 8px; border-left: 3px solid var(--pink);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="header-inner">
+      <div class="header-title">
+        <div class="cat-icon">🐱</div>
+        <h1>Dhrubanshika's <span>200 Days</span> Tracker 💖</h1>
+      </div>
+      <div class="header-controls">
+        <div class="share-badge" onclick="copyShareLink()">
+          🔗 dhrubanshika-tracker.vercel.app
+        </div>
+        <button class="icon-btn" id="soundBtn" onclick="toggleSound()" title="Toggle Sound">
+          <div id="soundWaves" class="sound-waves sound-on">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+        </button>
+        <button class="icon-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode" id="themeBtn">🌙</button>
+        <button class="icon-btn btn-danger" onclick="openResetModal()" title="Reset All" style="font-size:0.8rem">🗑️</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== NAV TABS ===== -->
+  <div class="nav-tabs" id="navTabs">
+    <button class="nav-tab active" onclick="switchTab('dashboard')">🏠 Dashboard</button>
+    <button class="nav-tab" onclick="switchTab('physics')">📘 Physics</button>
+    <button class="nav-tab" onclick="switchTab('chemistry')">🧪 Chemistry</button>
+    <button class="nav-tab" onclick="switchTab('biology')">🌿 Biology</button>
+    <button class="nav-tab" onclick="switchTab('criminology')">🔍 Criminology</button>
+    <button class="nav-tab" onclick="switchTab('flashcards')">🧠 Flashcards</button>
+    <button class="nav-tab" onclick="switchTab('days200')">📅 200 Days</button>
+  </div>
+
+  <!-- ===== MAIN WRAP ===== -->
+  <div class="main-wrap">
+
+    <!-- ===== DASHBOARD TAB ===== -->
+    <div class="tab-panel active" id="tab-dashboard">
+
+      <!-- Quote Banner -->
+      <div class="quote-banner" id="quoteBanner">
+        <p class="quote-text" id="quoteText">Loading your daily inspiration... 💖</p>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">📘</div>
+          <div class="stat-num" id="stat-physics">0%</div>
+          <div class="stat-label">Physics</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🧪</div>
+          <div class="stat-num" id="stat-chemistry">0%</div>
+          <div class="stat-label">Chemistry</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🌿</div>
+          <div class="stat-num" id="stat-biology">0%</div>
+          <div class="stat-label">Biology</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔍</div>
+          <div class="stat-num" id="stat-criminology">0%</div>
+          <div class="stat-label">Criminology</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-num" id="stat-days">0</div>
+          <div class="stat-label">Days Done</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-num" id="stat-streak">0</div>
+          <div class="stat-label">Habit Streak</div>
+        </div>
+      </div>
+
+      <!-- Overall Progress -->
+      <div class="card" style="margin-bottom:20px; text-align:center;">
+        <div class="deco-rabbits">
+          <span>🐰</span><span>🐰</span><span>🐰</span>
+        </div>
+        <div class="section-title" style="justify-content:center;">
+          <span>✨ Overall NEET Progress</span>
+        </div>
+        <div class="overall-progress-display" id="overallPercent">0%</div>
+        <div class="progress-wrap" style="max-width:500px;margin:0 auto;">
+          <div class="progress-bar-track" style="height:20px;">
+            <div class="progress-bar-fill" id="overallBar" style="width:0%"></div>
+          </div>
+        </div>
+        <p style="color:var(--text-light);font-size:0.82rem;margin-top:10px;">Keep going, you're doing amazing! 🌸</p>
+      </div>
+
+      <div class="card-grid">
+        <!-- Water Tracker -->
+        <div class="card">
+          <div class="section-title">💧 Water Tracker</div>
+          <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:14px;">Goal: 8 glasses today!</p>
+          <div class="water-container" id="waterContainer"></div>
+          <div class="water-count-display" id="waterCountDisplay">0 / 8 glasses</div>
+          <div style="text-align:center;margin-top:12px;">
+            <button class="btn btn-outline btn-sm" onclick="resetWater()">🔄 Reset Water</button>
+          </div>
+        </div>
+
+        <!-- Habit Tracker -->
+        <div class="card">
+          <div class="section-title"><span class="bunny">🐰</span> Daily Habits</div>
+          <div id="habitList"></div>
+          <div style="margin-top:12px; text-align:center;">
+            <span style="font-size:0.82rem;color:var(--text-light);">
+              🔥 Current Habit Streak: <strong id="streakDisplay">0 days</strong>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PHYSICS TAB ===== -->
+    <div class="tab-panel" id="tab-physics">
+      <div class="deco-rabbits"><span>🐰</span><span>🐰</span></div>
+      <div class="section-title">📘 Physics — Class 11 & 12 NCERT</div>
+      <div class="progress-wrap" style="margin-bottom:24px;">
+        <div class="progress-label">
+          <span>Physics Progress</span>
+          <span id="physicsPercent">0%</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="physicsBar" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="physicsContent"></div>
+    </div>
+
+    <!-- ===== CHEMISTRY TAB ===== -->
+    <div class="tab-panel" id="tab-chemistry">
+      <div class="deco-rabbits"><span>🐰</span><span>🐰</span></div>
+      <div class="section-title">🧪 Chemistry — Class 11 & 12 NCERT</div>
+      <div class="progress-wrap" style="margin-bottom:24px;">
+        <div class="progress-label">
+          <span>Chemistry Progress</span>
+          <span id="chemistryPercent">0%</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="chemistryBar" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="chemistryContent"></div>
+    </div>
+
+    <!-- ===== BIOLOGY TAB ===== -->
+    <div class="tab-panel" id="tab-biology">
+      <div class="deco-rabbits"><span>🐰</span><span>🐰</span></div>
+      <div class="section-title">🌿 Biology — Class 11 & 12 NCERT</div>
+      <div class="progress-wrap" style="margin-bottom:24px;">
+        <div class="progress-label">
+          <span>Biology Progress</span>
+          <span id="biologyPercent">0%</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="biologyBar" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="biologyContent"></div>
+    </div>
+
+    <!-- ===== CRIMINOLOGY TAB ===== -->
+    <div class="tab-panel" id="tab-criminology">
+      <div class="deco-rabbits"><span>🐰</span><span>🐰</span></div>
+      <div class="section-title">🔍 Criminology — Pearson</div>
+      <div class="progress-wrap" style="margin-bottom:24px;">
+        <div class="progress-label">
+          <span>Criminology Progress</span>
+          <span id="criminologyPercent">0%</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="criminologyBar" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="criminologyContent"></div>
+    </div>
+
+    <!-- ===== FLASHCARDS TAB ===== -->
+    <div class="tab-panel" id="tab-flashcards">
+      <div class="deco-rabbits"><span>🐰</span><span>🐱</span><span>🐰</span></div>
+      <div class="section-title">🧠 Flashcards</div>
+
+      <!-- Deck Selector -->
+      <div class="flashcard-deck-selector" id="deckSelector">
+        <button class="deck-btn active" onclick="switchDeck('physics')">📘 Physics</button>
+        <button class="deck-btn" onclick="switchDeck('chemistry')">🧪 Chemistry</button>
+        <button class="deck-btn" onclick="switchDeck('biology')">🌿 Biology</button>
+        <button class="deck-btn" onclick="switchDeck('criminology')">🔍 Criminology</button>
+        <button class="deck-btn" onclick="switchDeck('custom')">✨ My Cards</button>
+      </div>
+
+      <!-- Flashcard Display -->
+      <div style="text-align:center;margin-bottom:8px;">
+        <span id="cardCounter" style="font-size:0.82rem;color:var(--text-light);font-weight:700;"></span>
+      </div>
+      <div class="flashcard-area">
+        <div class="flashcard" id="currentFlashcard" onclick="flipCard()">
+          <div class="card-face card-front">
+            <p id="cardFrontText">Click on a deck to start!</p>
+            <span class="card-hint">Click to flip 🌸</span>
+          </div>
+          <div class="card-face card-back">
+            <p id="cardBackText">Answer will appear here</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-controls">
+        <button class="btn btn-outline btn-sm" onclick="prevCard()">← Prev</button>
+        <button class="btn btn-primary btn-sm" onclick="flipCard()">🔄 Flip</button>
+        <button class="btn btn-outline btn-sm" onclick="nextCard()">Next →</button>
+        <button class="btn btn-outline btn-sm" onclick="shuffleCards()">🔀 Shuffle</button>
+      </div>
+
+      <!-- Add Custom Flashcard -->
+      <div class="add-flashcard-form">
+        <h4>✏️ Add Your Own Flashcard</h4>
+        <div class="form-row">
+          <select class="cute-input" id="newCardDeck" style="min-width:140px;flex:0.5;">
+            <option value="physics">Physics</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="biology">Biology</option>
+            <option value="criminology">Criminology</option>
+            <option value="custom">My Cards</option>
+          </select>
+          <input class="cute-input" id="newCardFront" placeholder="Question / Front side..."/>
+        </div>
+        <div class="form-row">
+          <textarea class="cute-textarea" id="newCardBack" placeholder="Answer / Back side..."></textarea>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="addFlashcard()">💖 Add Card</button>
+      </div>
+
+      <!-- Card List -->
+      <div class="divider"></div>
+      <div id="cardListDisplay"></div>
+    </div>
+
+    <!-- ===== 200 DAYS TAB ===== -->
+    <div class="tab-panel" id="tab-days200">
+      <div class="deco-rabbits"><span>🐰</span><span>🐰</span><span>🐰</span></div>
+      <div class="section-title">📅 200 Day Journey</div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;justify-content:center;">
+          <div style="text-align:center;">
+            <div class="stat-num" id="daysCompleted200" style="font-size:2.8rem;">0</div>
+            <div class="stat-label">Days Completed</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="stat-num" style="font-size:2.8rem;">200</div>
+            <div class="stat-label">Total Days</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="stat-num" id="daysRemaining" style="font-size:2.8rem;color:var(--pink);">200</div>
+            <div class="stat-label">Days Left</div>
+          </div>
+        </div>
+        <div class="progress-wrap" style="margin-top:16px;">
+          <div class="progress-label">
+            <span>Journey Progress</span>
+            <span id="days200Percent">0%</span>
+          </div>
+          <div class="progress-bar-track" style="height:20px;">
+            <div class="progress-bar-fill" id="days200Bar" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:12px;text-align:center;">
+        Click on any day to mark it as complete 💖 (Current day is highlighted with ★)
+      </p>
+
+      <div style="text-align:center;margin-bottom:14px;">
+        <label for="startDateInput" style="font-size:0.85rem;color:var(--text-mid);font-weight:700;margin-right:8px;">Start Date:</label>
+        <input type="date" id="startDateInput" class="cute-input" style="max-width:180px;flex:none;" onchange="setStartDate()"/>
+      </div>
+
+      <div class="days-grid" id="daysGrid"></div>
+    </div>
+
+  </div><!-- end main-wrap -->
+
+  <!-- ===== RESET MODAL ===== -->
+  <div class="modal-overlay" id="resetModal">
+    <div class="modal">
+      <div style="font-size:3rem;margin-bottom:8px;">🗑️</div>
+      <h3>Reset Everything?</h3>
+      <p>This will clear ALL your progress, flashcards, habits, and water data. This cannot be undone! 😢</p>
+      <div class="modal-btns">
+        <button class="btn btn-danger" onclick="confirmReset()">Yes, Reset 💔</button>
+        <button class="btn btn-outline" onclick="closeResetModal()">Cancel 💖</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== AUDIO (soft click) ===== -->
+  <audio id="clickSound" preload="auto">
+    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAA..." type="audio/wav">
+  </audio>
+
+<script>
+/* ============================================================
+   DATA DEFINITIONS
+============================================================ */
+
+/* Physics Chapters & Topics */
+const physicsData = [
+  { id: 'ph_mech', class: '11', chapter: '⚡ Mechanics', topics: [
+    'Motion in a Straight Line (1D)', 'Motion in a Plane (2D & Projectile)', 'Laws of Motion (Newton\'s)',
+    'Work, Energy & Power', 'System of Particles & Rotational Motion', 'Gravitation', 'Mechanical Properties of Solids',
+    'Mechanical Properties of Fluids', 'Thermal Properties of Matter'
+  ]},
+  { id: 'ph_thermo', class: '11', chapter: '🌡️ Thermodynamics', topics: [
+    'Thermal Equilibrium & Zeroth Law', 'First Law of Thermodynamics', 'Second Law & Entropy',
+    'Heat Engine & Refrigerator', 'Kinetic Theory of Gases', 'Specific Heat Capacities'
+  ]},
+  { id: 'ph_waves', class: '11', chapter: '🌊 Waves & Oscillations', topics: [
+    'Simple Harmonic Motion (SHM)', 'Damped & Forced Oscillations', 'Wave Motion & Speed',
+    'Superposition & Stationary Waves', 'Sound Waves & Doppler Effect', 'Beats & Resonance'
+  ]},
+  { id: 'ph_electrostatics', class: '12', chapter: '⚡ Electrostatics', topics: [
+    'Electric Charges & Coulomb\'s Law', 'Electric Field & Field Lines', 'Gauss\'s Law',
+    'Electric Potential & Potential Energy', 'Capacitors & Capacitance', 'Dielectrics & Polarization'
+  ]},
+  { id: 'ph_current', class: '12', chapter: '🔌 Current Electricity', topics: [
+    'Ohm\'s Law & Resistance', 'Drift Velocity & Mobility', 'Kirchhoff\'s Laws',
+    'Wheatstone Bridge & Potentiometer', 'Heating Effect of Current', 'Cells & EMF'
+  ]},
+  { id: 'ph_magnetism', class: '12', chapter: '🧲 Magnetism & EMI', topics: [
+    'Magnetic Field & Biot-Savart Law', 'Ampere\'s Circuital Law', 'Moving Charges in Magnetic Field',
+    'Magnetic Properties of Materials', 'Electromagnetic Induction (Faraday\'s Laws)', 'Lenz\'s Law',
+    'Inductance (Self & Mutual)', 'Alternating Currents (AC)', 'LC & RLC Circuits'
+  ]},
+  { id: 'ph_optics', class: '12', chapter: '🔭 Optics', topics: [
+    'Reflection & Refraction of Light', 'Mirrors & Lenses', 'Prisms & Dispersion',
+    'Optical Instruments (Microscope, Telescope)', 'Huygens Principle & Wave Optics',
+    'Interference & Young\'s Double Slit', 'Diffraction & Polarization'
+  ]},
+  { id: 'ph_modern', class: '12', chapter: '⚛️ Modern Physics', topics: [
+    'Photoelectric Effect & Einstein Equation', 'Compton Effect & De Broglie Wave',
+    'Bohr\'s Model & Atomic Spectra', 'Nuclear Structure & Radioactivity',
+    'Nuclear Fission & Fusion', 'Semiconductor Basics & Diodes',
+    'Transistors & Logic Gates', 'Communication Systems'
+  ]},
+];
+
+/* Chemistry Chapters & Topics */
+const chemistryData = [
+  { id: 'ch_mole', class: '11', chapter: '⚗️ Physical: Mole & Stoichiometry', topics: [
+    'Mole Concept & Avogadro\'s Number', 'Empirical & Molecular Formula',
+    'Limiting Reagent & Percentage Yield', 'Concentration Terms (Molarity, Molality)',
+    'Atomic Structure & Quantum Numbers', 'Electronic Configuration', 'Periodic Table & Trends',
+    'Chemical Bonding (VSEPR, VBT, MOT)', 'States of Matter (Gas Laws)', 'Solutions & Colligative Properties'
+  ]},
+  { id: 'ch_thermo_chem', class: '11', chapter: '🌡️ Physical: Thermodynamics & Equilibrium', topics: [
+    'Enthalpy & Hess\'s Law', 'Bond Enthalpies', 'Spontaneity & Gibbs Energy',
+    'Chemical Equilibrium & Le Chatelier', 'Ionic Equilibrium & pH', 'Solubility Product (Ksp)',
+    'Electrochemistry (Nernst Equation)', 'Galvanic & Electrolytic Cells', 'Chemical Kinetics & Rate Laws',
+    'Arrhenius Equation & Activation Energy', 'Nuclear Chemistry'
+  ]},
+  { id: 'ch_organic_basic', class: '11', chapter: '🧬 Organic: Fundamentals', topics: [
+    'IUPAC Nomenclature', 'Inductive & Mesomeric Effects', 'Hyperconjugation & Aromaticity',
+    'Hydrocarbons (Alkanes, Alkenes, Alkynes)', 'Aromatic Hydrocarbons (Benzene)',
+    'Reactions: Substitution, Addition, Elimination', 'Isomerism (Structural & Stereoisomerism)'
+  ]},
+  { id: 'ch_organic_func', class: '12', chapter: '🧬 Organic: Functional Groups', topics: [
+    'Alcohols, Phenols & Ethers', 'Aldehydes & Ketones', 'Carboxylic Acids & Derivatives',
+    'Amines & Diazonium Salts', 'Biomolecules (Carbohydrates, Proteins, Nucleic Acids)',
+    'Polymers (Natural & Synthetic)', 'Chemistry in Everyday Life', 'Haloalkanes & Haloarenes'
+  ]},
+  { id: 'ch_inorganic', class: '11-12', chapter: '🔬 Inorganic Chemistry', topics: [
+    'p-Block Elements (Group 13–18)', 'd-Block & f-Block Elements (Transition Metals)',
+    'Coordination Compounds & Crystal Field Theory', 'Metallurgy & Extraction Processes',
+    'Qualitative Analysis (Salt Analysis)', 'Hydrogen & its Compounds',
+    's-Block Elements (Alkali & Alkaline Earth Metals)', 'Environmental Chemistry'
+  ]},
+];
+
+/* Biology Chapters & Topics */
+const biologyData = [
+  { id: 'bio_cell', class: '11', chapter: '🔬 Cell Biology', topics: [
+    'Cell Theory & Types of Cells', 'Cell Organelles & their Functions', 'Cell Membrane & Osmosis',
+    'Cell Division: Mitosis & Meiosis', 'Biomolecules (Proteins, Lipids, Nucleic Acids)'
+  ]},
+  { id: 'bio_plant', class: '11', chapter: '🌱 Plant Physiology', topics: [
+    'Mineral Nutrition & Essential Elements', 'Water Transport & Transpiration',
+    'Photosynthesis (Light & Dark Reactions)', 'Respiration in Plants (Glycolysis, Krebs)',
+    'Plant Growth & Development', 'Plant Hormones (Auxin, Gibberellin, etc.)'
+  ]},
+  { id: 'bio_human', class: '11-12', chapter: '🫀 Human Physiology', topics: [
+    'Digestion & Absorption', 'Breathing & Exchange of Gases',
+    'Body Fluids & Circulation (Heart)', 'Excretory Products & Kidneys',
+    'Locomotion & Movement', 'Neural Control & Coordination (Nervous System)',
+    'Chemical Coordination (Endocrine System)', 'Immune System & Disorders'
+  ]},
+  { id: 'bio_repro', class: '12', chapter: '🌸 Reproduction', topics: [
+    'Reproduction in Organisms', 'Sexual Reproduction in Flowering Plants',
+    'Human Reproduction (Male & Female)', 'Reproductive Health & Contraception'
+  ]},
+  { id: 'bio_genetics', class: '12', chapter: '🧬 Genetics & Molecular Biology', topics: [
+    'Mendel\'s Laws of Inheritance', 'Chromosomal Theory & Linkage',
+    'Sex Determination & Mutations', 'Molecular Basis of Inheritance (DNA Replication)',
+    'Transcription & Translation (Protein Synthesis)', 'Regulation of Gene Expression',
+    'Human Genome Project & DNA Fingerprinting'
+  ]},
+  { id: 'bio_evol', class: '12', chapter: '🦕 Evolution & Ecology', topics: [
+    'Origin of Life', 'Darwinian Evolution & Natural Selection', 'Mechanism of Evolution (Hardy-Weinberg)',
+    'Organisms & Populations', 'Ecosystem & Energy Flow', 'Biodiversity & Conservation',
+    'Environmental Issues (Pollution, Ozone Depletion)'
+  ]},
+  { id: 'bio_biotech', class: '12', chapter: '🧫 Biotechnology', topics: [
+    'Principles of Biotechnology (Recombinant DNA)', 'Tools of Biotechnology (PCR, Gel Electrophoresis)',
+    'Applications in Health (Insulin, Vaccines)', 'Applications in Agriculture (GM Crops)',
+    'Microbes in Human Welfare'
+  ]},
+];
+
+/* Criminology Chapters & Topics */
+const criminologyData = [
+  { id: 'crim_intro', class: 'Pearson', chapter: '📖 Introduction to Criminology', topics: [
+    'Definition & Scope of Criminology', 'Historical Development', 'Crime Statistics & Measurement',
+    'Dark Figure of Crime', 'Classical Criminology (Beccaria & Bentham)', 'Positivist School',
+    'Sociological Perspectives', 'Victimless Crimes'
+  ]},
+  { id: 'crim_theories', class: 'Pearson', chapter: '🧩 Theories of Crime', topics: [
+    'Biological Theories (Lombroso, XYY)', 'Psychological Theories (Freud, Eysenck)',
+    'Social Disorganization Theory', 'Strain Theory (Merton & Anomie)', 'Labelling Theory',
+    'Control Theory (Hirschi\'s Bond)', 'Routine Activities Theory', 'Critical Criminology',
+    'Feminist Criminology', 'Left Realism vs Right Realism'
+  ]},
+  { id: 'crim_justice', class: 'Pearson', chapter: '⚖️ Criminal Justice System', topics: [
+    'Police & Policing Strategies', 'Criminal Law & Prosecution', 'Courts & Sentencing',
+    'Prisons & Corrections', 'Probation & Parole', 'Youth Justice System',
+    'Restorative Justice', 'International Criminal Justice'
+  ]},
+  { id: 'crim_juvenile', class: 'Pearson', chapter: '👦 Juvenile Delinquency', topics: [
+    'Definition & Extent of Juvenile Delinquency', 'Theories Explaining Juvenile Crime',
+    'Family, Peers & School Influences', 'Gang Behavior', 'Juvenile Justice Process',
+    'Prevention & Rehabilitation Programs'
+  ]},
+  { id: 'crim_forensic', class: 'Pearson', chapter: '🧪 Forensic Psychology', topics: [
+    'Criminal Profiling & Offender Analysis', 'Eyewitness Testimony & Memory',
+    'Psychology of False Confessions', 'Assessment of Dangerousness & Risk',
+    'Mental Disorder & Criminal Responsibility', 'Serial Killers & Violent Offenders',
+    'Psychopathy & Sociopathy', 'Forensic Evidence & CSI'
+  ]},
+  { id: 'crim_victimology', class: 'Pearson', chapter: '💙 Victimology', topics: [
+    'Definition & Scope of Victimology', 'Lifestyle & Routine Activity Theories',
+    'Victim Precipitation Theory', 'Impact of Crime on Victims', 'Domestic Violence & Abuse',
+    'Sexual Violence & Rape', 'Hate Crimes', 'Victim Support Services & Rights',
+    'Compensation & Restorative Justice for Victims'
+  ]},
+];
+
+/* Habits */
+const habits = [
+  { id: 'habit_reading', emoji: '📖', name: 'Self-help Book Reading' },
+  { id: 'habit_meditation', emoji: '🧘‍♀️', name: 'Meditation (10 min)' },
+  { id: 'habit_skincare', emoji: '✨', name: 'Skincare Routine' },
+  { id: 'habit_gratitude', emoji: '💕', name: 'Gratitude Journaling' },
+  { id: 'habit_neet', emoji: '📚', name: 'NEET Study (3+ hours)' },
+  { id: 'habit_exercise', emoji: '🏃‍♀️', name: 'Exercise / Walk' },
+];
+
+/* Motivational Quotes */
+const quotes = [
+  "Your NEET dream is closer than you think. One more chapter today! 💪",
+  "Every expert was once a beginner. You are becoming the doctor you dream of! 🏥",
+  "Small steps every day lead to giant leaps. Keep going, star! ⭐",
+  "Difficult roads lead to beautiful destinations. Trust the process, Dhrubanshika! 🌸",
+  "You didn't come this far to only come this far. Keep pushing! 💖",
+  "The secret of getting ahead is getting started — you've already done that! 🐰",
+  "Your future patients need you to keep studying today! 🩺",
+  "Every page you read is a brick in your medical college dream! 📖",
+  "Be like a star — shine even in the darkest moments! ✨",
+  "Today's hard work is tomorrow's greatest story. You've got this! 🌟",
+  "You are braver than you believe, smarter than you seem! 💕",
+  "One day at a time. One topic at a time. You're unstoppable! 🔥",
+  "Dream it. Believe it. Study it. Achieve it! 🎓",
+  "The pain of studying today prevents the pain of regret tomorrow! 💪",
+  "Rise up, show up, and never give up! 🌷",
+  "Your dedication today is writing your success story! ✍️",
+  "Biology, Chemistry, Physics — you've got all three in your heart! 🧬",
+  "Sleep, study, repeat. The NEET crown is waiting for you! 👑",
+  "Every correct answer in the exam starts from a correct habit today! 📝",
+  "Focus. Breathe. You are more capable than you know! 🌿",
+];
+
+/* Default Flashcards */
+const defaultFlashcards = {
+  physics: [
+    { front: "State Newton's Second Law of Motion", back: "F = ma. The net force acting on an object equals its mass times acceleration. The direction of force equals the direction of acceleration." },
+    { front: "What is the formula for Kinetic Energy?", back: "KE = ½mv² where m = mass (kg) and v = velocity (m/s). Unit: Joule (J)" },
+    { front: "State Faraday's First Law of Electromagnetic Induction", back: "Whenever the magnetic flux through a circuit changes, an EMF is induced in the circuit. EMF = -dΦ/dt" },
+    { front: "What is Snell's Law?", back: "n₁ sin θ₁ = n₂ sin θ₂. The ratio of sine of angle of incidence to sine of angle of refraction is constant (refractive index)." },
+    { front: "What is the Photoelectric Effect?", back: "Emission of electrons from a metal surface when light above a threshold frequency falls on it. Einstein: E = hν = Work function + KE(max)" },
+    { front: "Define Simple Harmonic Motion", back: "A motion where restoring force is directly proportional to displacement from equilibrium and directed towards it. F = -kx" },
+  ],
+  chemistry: [
+    { front: "What is Le Chatelier's Principle?", back: "If a system in equilibrium is disturbed, it shifts to counteract the disturbance and restore equilibrium (changes in concentration, pressure, temperature)." },
+    { front: "State Hund's Rule of Maximum Multiplicity", back: "Electrons occupy orbitals of equal energy (degenerate) singly before pairing up. All singly occupied orbitals have parallel spins." },
+    { front: "What is the Nernst Equation?", back: "E = E° - (RT/nF) ln Q. At 25°C: E = E° - (0.0592/n) log Q. Used for non-standard conditions in electrochemistry." },
+    { front: "Explain Markovnikov's Rule", back: "In addition of HX to an unsymmetrical alkene, H adds to the carbon with more H atoms (less substituted C), and X adds to the more substituted carbon." },
+    { front: "What is the difference between SN1 and SN2?", back: "SN1: Two-step, forms carbocation, first-order, racemization. SN2: One-step, backside attack, second-order, inversion of configuration (Walden inversion)." },
+    { front: "Define Hybridization with an example", back: "Mixing of atomic orbitals to form new hybrid orbitals of equal energy. Example: Carbon in CH₄ is sp³ hybridized (4 equivalent bond orbitals, tetrahedral)." },
+  ],
+  biology: [
+    { front: "What is the site of light reactions in photosynthesis?", back: "Thylakoid membrane (grana) of chloroplasts. Products: ATP, NADPH, O₂. The light-dependent reactions (Photosystem I & II) occur here." },
+    { front: "Define the Central Dogma of Molecular Biology", back: "DNA → (Transcription) → mRNA → (Translation) → Protein. Genetic information flows from DNA to RNA to protein." },
+    { front: "What is the resting membrane potential?", back: "About -70 mV inside relative to outside. Maintained by Na⁺-K⁺ ATPase pump (3 Na⁺ out, 2 K⁺ in) and selective permeability of membrane." },
+    { front: "State Mendel's Law of Independent Assortment", back: "Genes for different traits assort independently of each other during gamete formation, provided they are on different chromosomes (non-linked genes)." },
+    { front: "What is the Krebs Cycle? Where does it occur?", back: "A series of reactions in the matrix of mitochondria that oxidizes acetyl-CoA. Per cycle: 3 NADH, 1 FADH₂, 1 GTP, 2 CO₂ produced." },
+    { front: "Define Hardy-Weinberg Equilibrium", back: "Allele frequencies in a population remain constant if no evolution occurs. Conditions: large population, random mating, no mutation/migration/selection." },
+  ],
+  criminology: [
+    { front: "What is the 'Dark Figure of Crime'?", back: "The difference between crimes that actually occur and those that are officially recorded/reported. Caused by under-reporting, under-recording, and definitional issues." },
+    { front: "Explain Merton's Strain Theory", back: "Social strain occurs when society emphasizes success goals (e.g., wealth) but limits legitimate means to achieve them. Responses: Conformity, Innovation, Ritualism, Retreatism, Rebellion." },
+    { front: "What is Labelling Theory?", back: "Deviance is not inherent in an act but is the result of social reaction. Primary deviance leads to labelling, which causes secondary deviance (a deviant identity/career). Key theorist: Howard Becker." },
+    { front: "Define Victimology", back: "The scientific study of victims of crime, including relationships between victims and offenders, the experiences of victims with criminal justice, and victim advocacy policies." },
+    { front: "What is Restorative Justice?", back: "An approach that focuses on repairing harm caused by criminal behavior through cooperative processes involving all stakeholders. Emphasizes healing, community, and accountability over punishment." },
+    { front: "Explain Routine Activity Theory", back: "Crime occurs when three elements converge: (1) a motivated offender, (2) a suitable target, and (3) absence of a capable guardian. Theory by Cohen & Felson (1979)." },
+  ],
+  custom: [],
+};
+
+/* ============================================================
+   STATE
+============================================================ */
+let state = {
+  checkedTopics: {},      // { topicId: true/false }
+  flashcards: {},          // { deck: [{front, back}] }
+  waterToday: 0,
+  habits: {},              // { habitId: { done: bool, streak: int, lastDate: '' } }
+  days200: {},             // { 1: true, ... }
+  startDate: '',
+  habitStreak: 0,
+  lastHabitDate: '',
+  darkMode: false,
+  soundOn: true,
+};
+
+/* ============================================================
+   STORAGE
+============================================================ */
+function saveState() {
+  localStorage.setItem('dhrubanshika_tracker_v2', JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = localStorage.getItem('dhrubanshika_tracker_v2');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+      // Merge flashcards defaults with saved custom ones
+      for (const deck in defaultFlashcards) {
+        if (!state.flashcards[deck]) state.flashcards[deck] = defaultFlashcards[deck];
+      }
+    } catch(e) { initDefaults(); }
+  } else {
+    initDefaults();
+  }
+  // Check if water needs daily reset
+  const today = getTodayStr();
+  if (state.waterDate !== today) { state.waterToday = 0; state.waterDate = today; }
+  // Check habit reset
+  checkHabitReset();
+}
+
+function initDefaults() {
+  state.flashcards = JSON.parse(JSON.stringify(defaultFlashcards));
+  state.habits = {};
+  habits.forEach(h => { state.habits[h.id] = { done: false, streak: 0, lastDate: '' }; });
+  state.waterToday = 0; state.waterDate = getTodayStr();
+}
+
+function getTodayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+/* ============================================================
+   THEME & DARK MODE
+============================================================ */
+function toggleDarkMode() {
+  state.darkMode = !state.darkMode;
+  document.body.classList.toggle('dark-mode', state.darkMode);
+  document.getElementById('themeBtn').textContent = state.darkMode ? '☀️' : '🌙';
+  saveState();
+}
+
+/* ============================================================
+   SOUND
+============================================================ */
+function toggleSound() {
+  state.soundOn = !state.soundOn;
+  const el = document.getElementById('soundWaves');
+  el.className = 'sound-waves ' + (state.soundOn ? 'sound-on' : 'sound-off');
+  saveState();
+}
+
+function playClick() {
+  if (!state.soundOn) return;
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.frequency.setValueAtTime(600, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.1);
+  gain.gain.setValueAtTime(0.08, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+  osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.15);
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+============================================================ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ============================================================
+   SPARKLE EFFECT
+============================================================ */
+function spawnSparkle(x, y) {
+  const sparkles = ['✨','💖','🌸','⭐','💫','🌟','🎀','🐰'];
+  for (let i = 0; i < 5; i++) {
+    const el = document.createElement('div');
+    el.className = 'sparkle';
+    el.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+    el.style.left = (x + (Math.random() - 0.5) * 100) + 'px';
+    el.style.top = (y + (Math.random() - 0.5) * 60) + 'px';
+    el.style.animationDelay = (Math.random() * 0.3) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1200);
+  }
+}
+
+/* ============================================================
+   TABS
+============================================================ */
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const tabMap = ['dashboard','physics','chemistry','biology','criminology','flashcards','days200'];
+  tabs[tabMap.indexOf(tabId)]?.classList.add('active');
+  updateAllProgress();
+}
+
+/* ============================================================
+   QUOTE
+============================================================ */
+function setDailyQuote() {
+  const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  const q = quotes[dayOfYear % quotes.length];
+  document.getElementById('quoteText').textContent = q;
+}
+
+/* ============================================================
+   SUBJECT CHAPTERS RENDERING
+============================================================ */
+function renderSubjectContent(data, containerId, subjectKey) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  data.forEach(chapter => {
+    const section = document.createElement('div');
+    section.className = 'subject-section';
+
+    // Count checked topics
+    const total = chapter.topics.length;
+    const done = chapter.topics.filter((_, i) => state.checkedTopics[chapter.id + '_' + i]).length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+
+    section.innerHTML = `
+      <div class="subject-header" onclick="toggleChapter('${chapter.id}')" id="hdr-${chapter.id}">
+        <div class="subject-header-left">
+          <span>${chapter.chapter}</span>
+          <span class="subject-class-badge">Class ${chapter.class}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:0.8rem;font-weight:700;color:var(--text-mid)">${done}/${total} (${pct}%)</span>
+          <span class="chevron">▼</span>
+        </div>
+      </div>
+      <div class="chapter-body" id="body-${chapter.id}">
+        <div class="progress-wrap" style="margin-bottom:12px;">
+          <div class="progress-bar-track" style="height:10px;">
+            <div class="progress-bar-fill" id="chpbar-${chapter.id}" style="width:${pct}%"></div>
+          </div>
+        </div>
+        <ul class="topic-list" id="topics-${chapter.id}">
+          ${chapter.topics.map((topic, i) => {
+            const checked = !!state.checkedTopics[chapter.id + '_' + i];
+            return `<li class="topic-item ${checked ? 'done' : ''}" id="titem-${chapter.id}-${i}" onclick="toggleTopic('${chapter.id}', ${i}, '${subjectKey}', event)">
+              <div class="cute-checkbox ${checked ? 'checked' : ''}" id="chk-${chapter.id}-${i}"></div>
+              <label>${topic}</label>
+            </li>`;
+          }).join('')}
+        </ul>
+        <div style="margin-top:12px;text-align:right;">
+          <button class="btn btn-outline btn-sm" onclick="markAllChapter('${chapter.id}', '${subjectKey}', ${total})">
+            ✅ Mark All Done
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="unmarkAllChapter('${chapter.id}', '${subjectKey}', ${total})" style="margin-left:6px;">
+            ↩️ Unmark All
+          </button>
+        </div>
+      </div>
+    `;
+    container.appendChild(section);
+  });
+}
+
+function toggleChapter(id) {
+  const body = document.getElementById('body-' + id);
+  const hdr = document.getElementById('hdr-' + id);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  hdr.classList.toggle('expanded', !isOpen);
+}
+
+function toggleTopic(chapterId, index, subjectKey, event) {
+  const key = chapterId + '_' + index;
+  state.checkedTopics[key] = !state.checkedTopics[key];
+
+  const item = document.getElementById(`titem-${chapterId}-${index}`);
+  const chk = document.getElementById(`chk-${chapterId}-${index}`);
+  item.classList.toggle('done', state.checkedTopics[key]);
+  chk.classList.toggle('checked', state.checkedTopics[key]);
+
+  if (state.checkedTopics[key]) {
+    playClick();
+    const rect = event.target.getBoundingClientRect();
+    spawnSparkle(rect.left + rect.width / 2, rect.top + window.scrollY);
+    showToast('Topic completed! 🌸 Keep going!');
+  }
+
+  updateChapterBar(chapterId);
+  updateSubjectProgress(subjectKey);
+  updateDashboardStats();
+  saveState();
+}
+
+function markAllChapter(chapterId, subjectKey, total) {
+  for (let i = 0; i < total; i++) {
+    const key = chapterId + '_' + i;
+    state.checkedTopics[key] = true;
+    const item = document.getElementById(`titem-${chapterId}-${i}`);
+    const chk = document.getElementById(`chk-${chapterId}-${i}`);
+    if (item) item.classList.add('done');
+    if (chk) chk.classList.add('checked');
+  }
+  updateChapterBar(chapterId);
+  updateSubjectProgress(subjectKey);
+  updateDashboardStats();
+  saveState();
+  showToast('Chapter complete! You\'re amazing! 🎉');
+}
+
+function unmarkAllChapter(chapterId, subjectKey, total) {
+  for (let i = 0; i < total; i++) {
+    const key = chapterId + '_' + i;
+    delete state.checkedTopics[key];
+    const item = document.getElementById(`titem-${chapterId}-${i}`);
+    const chk = document.getElementById(`chk-${chapterId}-${i}`);
+    if (item) item.classList.remove('done');
+    if (chk) chk.classList.remove('checked');
+  }
+  updateChapterBar(chapterId);
+  updateSubjectProgress(subjectKey);
+  updateDashboardStats();
+  saveState();
+}
+
+function updateChapterBar(chapterId) {
+  // Find chapter data
+  const allData = [...physicsData, ...chemistryData, ...biologyData, ...criminologyData];
+  const ch = allData.find(c => c.id === chapterId);
+  if (!ch) return;
+  const total = ch.topics.length;
+  const done = ch.topics.filter((_, i) => state.checkedTopics[ch.id + '_' + i]).length;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  const bar = document.getElementById('chpbar-' + chapterId);
+  if (bar) bar.style.width = pct + '%';
+  // Update header counter
+  const hdr = document.getElementById('hdr-' + chapterId);
+  if (hdr) {
+    const span = hdr.querySelector('span:nth-child(2)');
+    if (span) span.textContent = `${done}/${total} (${pct}%)`;
+  }
+}
+
+function calcSubjectProgress(data) {
+  let total = 0, done = 0;
+  data.forEach(ch => {
+    ch.topics.forEach((_, i) => {
+      total++;
+      if (state.checkedTopics[ch.id + '_' + i]) done++;
+    });
+  });
+  return total ? Math.round((done / total) * 100) : 0;
+}
+
+function updateSubjectProgress(key) {
+  const map = { physics: physicsData, chemistry: chemistryData, biology: biologyData, criminology: criminologyData };
+  const data = map[key]; if (!data) return;
+  const pct = calcSubjectProgress(data);
+  const bar = document.getElementById(key + 'Bar');
+  const lbl = document.getElementById(key + 'Percent');
+  if (bar) bar.style.width = pct + '%';
+  if (lbl) lbl.textContent = pct + '%';
+}
+
+function updateAllProgress() {
+  ['physics','chemistry','biology','criminology'].forEach(k => updateSubjectProgress(k));
+  updateDashboardStats();
+  updateOverallProgress();
+}
+
+function updateOverallProgress() {
+  const allData = [...physicsData, ...chemistryData, ...biologyData, ...criminologyData];
+  const pct = calcSubjectProgress(allData);
+  const overallBar = document.getElementById('overallBar');
+  const overallPct = document.getElementById('overallPercent');
+  if (overallBar) overallBar.style.width = pct + '%';
+  if (overallPct) overallPct.textContent = pct + '%';
+}
+
+/* ============================================================
+   DASHBOARD STATS
+============================================================ */
+function updateDashboardStats() {
+  const map = { physics: physicsData, chemistry: chemistryData, biology: biologyData, criminology: criminologyData };
+  for (const k in map) {
+    const el = document.getElementById('stat-' + k);
+    if (el) el.textContent = calcSubjectProgress(map[k]) + '%';
+  }
+  const doneDays = Object.values(state.days200).filter(Boolean).length;
+  const statDays = document.getElementById('stat-days');
+  if (statDays) statDays.textContent = doneDays;
+
+  const streak = calcHabitStreak();
+  const statStreak = document.getElementById('stat-streak');
+  if (statStreak) statStreak.textContent = streak;
+  const streakDisplay = document.getElementById('streakDisplay');
+  if (streakDisplay) streakDisplay.textContent = streak + ' day' + (streak !== 1 ? 's' : '');
+
+  updateOverallProgress();
+}
+
+/* ============================================================
+   WATER TRACKER
+============================================================ */
+function renderWaterTracker() {
+  const container = document.getElementById('waterContainer');
+  container.innerHTML = '';
+  for (let i = 1; i <= 8; i++) {
+    const filled = i <= state.waterToday;
+    const div = document.createElement('div');
+    div.className = 'water-glass';
+    div.onclick = () => toggleWater(i);
+    div.innerHTML = `
+      <svg class="glass-svg" viewBox="0 0 50 65" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="glassClip${i}">
+            <rect x="5" y="8" width="40" height="52" rx="4"/>
+          </clipPath>
+        </defs>
+        <!-- Glass outline -->
+        <path d="M8 8 L6 58 Q6 62 10 62 L40 62 Q44 62 44 58 L42 8 Z"
+          fill="none" stroke="${filled ? '#FF9EC4' : '#D8BFFF'}" stroke-width="2.5"
+          stroke-linejoin="round"/>
+        <!-- Water fill -->
+        ${filled ? `<path d="M8 ${8 + (1 - filled * 0.8) * 50} L8 58 Q8 62 12 62 L38 62 Q42 62 42 58 L42 ${8 + (1 - filled * 0.8) * 50} Z"
+          fill="${i <= state.waterToday ? 'rgba(163, 210, 255, 0.7)' : 'none'}" clip-path="url(#glassClip${i})"/>` : ''}
+        <!-- Water filled path proper -->
+        ${filled ? `<path d="M9 30 L9 58 Q9 61 12 61 L38 61 Q41 61 41 58 L41 30 Q30 34 20 30 Q14 27 9 30Z"
+          fill="rgba(163, 210, 255, 0.75)"/>
+        <path d="M9 30 Q14 26 20 30 Q30 34 41 30" fill="none" stroke="rgba(163,210,255,0.9)" stroke-width="1.5"/>` : ''}
+        <!-- Glass shine -->
+        <line x1="13" y1="12" x2="11" y2="55" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <!-- Number -->
+        <text x="25" y="${filled ? 22 : 38}" text-anchor="middle" fill="${filled ? 'white' : '#B07A95'}"
+          font-size="11" font-weight="bold" font-family="Nunito,sans-serif">${i}</text>
+      </svg>
+      <span class="glass-label">${filled ? '💧' : '○'}</span>
+    `;
+    container.appendChild(div);
+  }
+  document.getElementById('waterCountDisplay').textContent = state.waterToday + ' / 8 glasses';
+}
+
+function toggleWater(glassNum) {
+  if (glassNum <= state.waterToday) {
+    state.waterToday = glassNum - 1;
+  } else {
+    state.waterToday = glassNum;
+    if (state.waterToday === 8) {
+      showToast('🎉 Daily water goal achieved! Amazing! 💧');
+      spawnSparkle(window.innerWidth / 2, window.innerHeight / 2);
+    }
+  }
+  playClick();
+  renderWaterTracker();
+  saveState();
+}
+
+function resetWater() {
+  state.waterToday = 0;
+  renderWaterTracker();
+  saveState();
+  showToast('Water tracker reset! 💧');
+}
+
+/* ============================================================
+   HABIT TRACKER
+============================================================ */
+function checkHabitReset() {
+  const today = getTodayStr();
+  // Reset done state daily (but keep streaks)
+  if (state.habitDate !== today) {
+    // Check if all habits were done yesterday
+    const yesterday = state.habitDate;
+    const allDone = habits.every(h => state.habits[h.id]?.done);
+    if (allDone && yesterday) {
+      // streak continues (was already incremented when completed)
+    } else if (yesterday && yesterday !== today) {
+      // Missed day — reset streak
+      state.habitStreak = 0;
+    }
+    habits.forEach(h => {
+      if (!state.habits[h.id]) state.habits[h.id] = { done: false, streak: 0, lastDate: '' };
+      state.habits[h.id].done = false;
+    });
+    state.habitDate = today;
+    saveState();
+  }
+}
+
+function renderHabits() {
+  const container = document.getElementById('habitList');
+  container.innerHTML = '';
+  habits.forEach(h => {
+    const data = state.habits[h.id] || { done: false, streak: 0 };
+    const div = document.createElement('div');
+    div.className = 'habit-item' + (data.done ? ' done' : '');
+    div.id = 'habit-' + h.id;
+    div.onclick = () => toggleHabit(h.id);
+    div.innerHTML = `
+      <div class="habit-left">
+        <span class="habit-emoji">${h.emoji}</span>
+        <div>
+          <div class="habit-name">${h.name}</div>
+          <div class="habit-streak">🔥 ${data.streak || 0} day streak</div>
+        </div>
+      </div>
+      <div class="habit-check" id="hchk-${h.id}"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleHabit(habitId) {
+  if (!state.habits[habitId]) state.habits[habitId] = { done: false, streak: 0, lastDate: '' };
+  const h = state.habits[habitId];
+  const today = getTodayStr();
+
+  if (!h.done) {
+    h.done = true;
+    h.lastDate = today;
+    h.streak = (h.streak || 0) + 1;
+    playClick();
+    spawnSparkle(window.innerWidth / 2, 300);
+    showToast(habits.find(x => x.id === habitId)?.emoji + ' Habit done! Keep it up! 🌸');
+  } else {
+    h.done = false;
+    h.streak = Math.max(0, (h.streak || 1) - 1);
+  }
+
+  // Update DOM
+  const item = document.getElementById('habit-' + habitId);
+  if (item) {
+    item.classList.toggle('done', h.done);
+    const chk = document.getElementById('hchk-' + habitId);
+    const streak = item.querySelector('.habit-streak');
+    if (streak) streak.textContent = '🔥 ' + (h.streak || 0) + ' day streak';
+  }
+
+  // Check if all done
+  const allDone = habits.every(hb => state.habits[hb.id]?.done);
+  if (allDone) {
+    state.habitStreak = (state.habitStreak || 0) + 1;
+    showToast('🎉 ALL habits done today! Incredible! 💖');
+    spawnSparkle(window.innerWidth / 2, window.innerHeight / 3);
+  }
+
+  updateDashboardStats();
+  saveState();
+}
+
+function calcHabitStreak() {
+  return state.habitStreak || 0;
+}
+
+/* ============================================================
+   200 DAYS GRID
+============================================================ */
+function renderDaysGrid() {
+  const grid = document.getElementById('daysGrid');
+  grid.innerHTML = '';
+
+  let currentDay = 1;
+  if (state.startDate) {
+    const start = new Date(state.startDate);
+    const today = new Date();
+    const diff = Math.floor((today - start) / 86400000) + 1;
+    currentDay = Math.min(Math.max(diff, 1), 200);
+  }
+
+  for (let i = 1; i <= 200; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'day-cell' + (state.days200[i] ? ' completed' : '') + (i === currentDay ? ' current' : '');
+    cell.textContent = i;
+    cell.title = `Day ${i}`;
+    cell.onclick = () => toggleDay(i, cell);
+    grid.appendChild(cell);
+  }
+
+  updateDays200Stats();
+}
+
+function toggleDay(dayNum, cell) {
+  state.days200[dayNum] = !state.days200[dayNum];
+  cell.classList.toggle('completed', state.days200[dayNum]);
+  if (state.days200[dayNum]) {
+    playClick();
+    const rect = cell.getBoundingClientRect();
+    spawnSparkle(rect.left + rect.width / 2, rect.top + window.scrollY);
+    showToast(`Day ${dayNum} completed! 🌸 You're incredible!`);
+  }
+  updateDays200Stats();
+  updateDashboardStats();
+  saveState();
+}
+
+function setStartDate() {
+  state.startDate = document.getElementById('startDateInput').value;
+  renderDaysGrid();
+  saveState();
+}
+
+function updateDays200Stats() {
+  const done = Object.values(state.days200).filter(Boolean).length;
+  const remaining = 200 - done;
+  const pct = Math.round((done / 200) * 100);
+  document.getElementById('daysCompleted200').textContent = done;
+  document.getElementById('daysRemaining').textContent = remaining;
+  document.getElementById('days200Percent').textContent = pct + '%';
+  const bar = document.getElementById('days200Bar');
+  if (bar) bar.style.width = pct + '%';
+}
+
+/* ============================================================
+   FLASHCARDS
+============================================================ */
+let currentDeck = 'physics';
+let currentCardIndex = 0;
+let isFlipped = false;
+
+function switchDeck(deck) {
+  currentDeck = deck;
+  currentCardIndex = 0;
+  isFlipped = false;
+  document.querySelectorAll('.deck-btn').forEach(b => b.classList.remove('active'));
+  const deckMap = ['physics','chemistry','biology','criminology','custom'];
+  const idx = deckMap.indexOf(deck);
+  document.querySelectorAll('.deck-btn')[idx]?.classList.add('active');
+  renderCurrentCard();
+  renderCardList();
+}
+
+function renderCurrentCard() {
+  const deck = state.flashcards[currentDeck] || [];
+  const card = document.getElementById('currentFlashcard');
+  const counter = document.getElementById('cardCounter');
+
+  card.classList.remove('flipped');
+  isFlipped = false;
+
+  if (deck.length === 0) {
+    document.getElementById('cardFrontText').textContent = 'No cards in this deck yet! Add some below ✏️';
+    document.getElementById('cardBackText').textContent = '...';
+    counter.textContent = 'No cards';
+    return;
+  }
+
+  const fc = deck[currentCardIndex];
+  document.getElementById('cardFrontText').textContent = fc.front;
+  document.getElementById('cardBackText').textContent = fc.back;
+  counter.textContent = `Card ${currentCardIndex + 1} of ${deck.length}`;
+}
+
+function flipCard() {
+  const card = document.getElementById('currentFlashcard');
+  isFlipped = !isFlipped;
+  card.classList.toggle('flipped', isFlipped);
+  playClick();
+}
+
+function nextCard() {
+  const deck = state.flashcards[currentDeck] || [];
+  if (deck.length === 0) return;
+  currentCardIndex = (currentCardIndex + 1) % deck.length;
+  renderCurrentCard();
+  playClick();
+}
+
+function prevCard() {
+  const deck = state.flashcards[currentDeck] || [];
+  if (deck.length === 0) return;
+  currentCardIndex = (currentCardIndex - 1 + deck.length) % deck.length;
+  renderCurrentCard();
+  playClick();
+}
+
+function shuffleCards() {
+  const deck = state.flashcards[currentDeck];
+  if (!deck || deck.length < 2) return;
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  currentCardIndex = 0;
+  renderCurrentCard();
+  renderCardList();
+  showToast('Cards shuffled! 🔀');
+  saveState();
+}
+
+function addFlashcard() {
+  const deck = document.getElementById('newCardDeck').value;
+  const front = document.getElementById('newCardFront').value.trim();
+  const back = document.getElementById('newCardBack').value.trim();
+  if (!front || !back) { showToast('Please fill in both sides! 💕'); return; }
+
+  if (!state.flashcards[deck]) state.flashcards[deck] = [];
+  state.flashcards[deck].push({ front, back });
+
+  document.getElementById('newCardFront').value = '';
+  document.getElementById('newCardBack').value = '';
+  showToast('Flashcard added! 🌟');
+  playClick();
+
+  if (currentDeck === deck) {
+    currentCardIndex = state.flashcards[deck].length - 1;
+    renderCurrentCard();
+    renderCardList();
+  }
+  saveState();
+}
+
+function deleteFlashcard(deck, index) {
+  state.flashcards[deck].splice(index, 1);
+  if (currentCardIndex >= state.flashcards[deck].length) currentCardIndex = 0;
+  renderCurrentCard();
+  renderCardList();
+  saveState();
+  showToast('Card deleted! 🗑️');
+}
+
+function renderCardList() {
+  const deck = state.flashcards[currentDeck] || [];
+  const container = document.getElementById('cardListDisplay');
+  if (deck.length === 0) { container.innerHTML = '<p style="color:var(--text-light);text-align:center;font-size:0.85rem;">No cards yet! Add some above. 🌸</p>'; return; }
+
+  container.innerHTML = `<h4 style="font-family:\'Patrick Hand\',cursive;margin-bottom:12px;color:var(--text-mid);">📋 All Cards in this Deck (${deck.length})</h4>`;
+  deck.forEach((card, i) => {
+    const item = document.createElement('div');
+    item.style.cssText = 'border:1.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;background:var(--gradient-card);display:flex;justify-content:space-between;gap:10px;align-items:flex-start;';
+    item.innerHTML = `
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text-dark);">Q: ${card.front}</div>
+        <div style="font-size:0.82rem;color:var(--text-mid);">A: ${card.back.substring(0,80)}${card.back.length > 80 ? '...' : ''}</div>
+      </div>
+      <button onclick="deleteFlashcard('${currentDeck}',${i})" style="background:var(--light-pink);border:none;border-radius:8px;padding:5px 9px;cursor:pointer;font-size:0.75rem;color:var(--text-mid);flex-shrink:0;">🗑️</button>
+    `;
+    container.appendChild(item);
+  });
+}
+
+/* ============================================================
+   COPY SHARE LINK
+============================================================ */
+function copyShareLink() {
+  navigator.clipboard?.writeText('https://dhrubanshika-tracker.vercel.app').catch(() => {});
+  showToast('🔗 Share link copied to clipboard! 💖');
+}
+
+/* ============================================================
+   RESET MODAL
+============================================================ */
+function openResetModal() { document.getElementById('resetModal').classList.add('open'); }
+function closeResetModal() { document.getElementById('resetModal').classList.remove('open'); }
+function confirmReset() {
+  localStorage.removeItem('dhrubanshika_tracker_v2');
+  location.reload();
+}
+
+/* ============================================================
+   HABIT STREAK RECALCULATION
+============================================================ */
+// Recalculate if user had continuous days
+function recalcHabitStreaks() {
+  // Already handled per-habit on toggle
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+function init() {
+  loadState();
+
+  // Apply persisted theme
+  if (state.darkMode) {
+    document.body.classList.add('dark-mode');
+    document.getElementById('themeBtn').textContent = '☀️';
+  }
+  if (!state.soundOn) {
+    document.getElementById('soundWaves').className = 'sound-waves sound-off';
+  }
+
+  // Set start date input
+  if (state.startDate) {
+    document.getElementById('startDateInput').value = state.startDate;
+  }
+
+  // Set daily quote
+  setDailyQuote();
+
+  // Render subjects
+  renderSubjectContent(physicsData, 'physicsContent', 'physics');
+  renderSubjectContent(chemistryData, 'chemistryContent', 'chemistry');
+  renderSubjectContent(biologyData, 'biologyContent', 'biology');
+  renderSubjectContent(criminologyData, 'criminologyContent', 'criminology');
+
+  // Render other sections
+  renderWaterTracker();
+  renderHabits();
+  renderDaysGrid();
+  switchDeck('physics');
+
+  // Update progress
+  updateAllProgress();
+  updateDashboardStats();
+
+  // Ensure habits state populated
+  habits.forEach(h => {
+    if (!state.habits[h.id]) state.habits[h.id] = { done: false, streak: 0, lastDate: '' };
+  });
+}
+
+// Start when DOM is ready
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>
+
+<!-- =============================================
+DEPLOYMENT INSTRUCTIONS
+===============================================
+
+🚀 DEPLOYING ON VERCEL:
+1. Create a GitHub account at github.com
+2. Create a new repository (e.g., "dhrubanshika-tracker")
+3. Upload this index.html file to the repository
+4. Go to vercel.com and sign in with GitHub
+5. Click "New Project" → Import your GitHub repository
+6. Vercel will auto-detect it as a static site
+7. Click "Deploy" — it will be live in ~30 seconds!
+8. Set custom domain: Add "dhrubanshika-tracker" as your project name
+   → Your site will be at: dhrubanshika-tracker.vercel.app
+
+🚀 DEPLOYING ON GITHUB PAGES:
+1. Create a GitHub repository (public)
+2. Upload index.html to the main branch
+3. Go to Settings → Pages
+4. Set Source to "Deploy from a branch" → main → /(root)
+5. Save → Your site will be at:
+   https://[yourusername].github.io/[reponame]/
+
+💡 TIPS:
+- All data is saved in localStorage (browser)
+- To back up data: Open DevTools → Application → Local Storage
+  → Copy the value of 'dhrubanshika_tracker_v2'
+- To restore: Paste it back in the console:
+  localStorage.setItem('dhrubanshika_tracker_v2', '[your data]')
+
+Made with 💖 for Dhrubanshika — You've got this, future doctor! 🩺🌸
+============================================= -->
